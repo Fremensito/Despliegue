@@ -1,0 +1,31 @@
+import { AxiosInstance, AxiosResponse} from "axios"
+
+const red = "\x1b[31m"
+const green = "\x1b[32m"
+const base = "limpieza"
+
+export async function getLimpiezasId(requester: AxiosInstance, id: string){
+    
+    let response: AxiosResponse
+
+    try{
+        response = await requester.get(`${base}/${id}`)
+        console.log(green, "OK - Obtener limpiezas")
+    }
+    catch(error){
+        console.log(red, "ERROR - Obtener limpiezas")
+    }
+}
+
+export async function getLimpiezasWrongId(requester: AxiosInstance, id: string){
+
+    let response: AxiosResponse
+
+    try{
+        response = await requester.get(`${base}/${id}`)
+        console.log(red, "ERROR - Mal id obtener limpiezas")
+    }
+    catch(error){
+        console.log(green, "OK - Mal id obtener limpiezas")
+    }
+}

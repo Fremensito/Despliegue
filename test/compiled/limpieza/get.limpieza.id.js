@@ -36,53 +36,51 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var login_1 = require("./auth/login");
-var axios_1 = require("axios");
-var white = "\x1b[0m";
-var requester = axios_1.default.create({
-    baseURL: "http://localhost:3000/",
-    headers: {
-        "Content-Type": "application/json"
-    }
-});
-//Variables test login
-var credsIncorrectas = { login: "any", password: "any" };
-var loginIncorrecto = { login: "any", password: "usuario" };
-var passIncorrecto = { login: "usuario", password: "any" };
-var credsCorrectas = { login: "usuario", password: "usuario" };
-function loginTest() {
+exports.getLimpiezasWrongId = exports.getLimpiezasId = void 0;
+var red = "\x1b[31m";
+var green = "\x1b[32m";
+var base = "limpieza";
+function getLimpiezasId(requester, id) {
     return __awaiter(this, void 0, void 0, function () {
-        var token;
+        var response, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, login_1.testNoAuth)(requester, credsIncorrectas, "Credenciales incorrectas")];
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, requester.get("".concat(base, "/").concat(id))];
                 case 1:
-                    _a.sent();
-                    return [4 /*yield*/, (0, login_1.testNoAuth)(requester, loginIncorrecto, "Login incorrecto")];
+                    response = _a.sent();
+                    console.log(green, "OK - Obtener limpiezas");
+                    return [3 /*break*/, 3];
                 case 2:
-                    _a.sent();
-                    return [4 /*yield*/, (0, login_1.testNoAuth)(requester, passIncorrecto, "Password incorrecto")];
-                case 3:
-                    _a.sent();
-                    return [4 /*yield*/, (0, login_1.testAuth)(requester, credsCorrectas)];
-                case 4:
-                    token = _a.sent();
-                    console.log(white, token);
-                    return [2 /*return*/];
+                    error_1 = _a.sent();
+                    console.log(red, "ERROR - Obtener limpiezas");
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });
 }
-function startTests() {
+exports.getLimpiezasId = getLimpiezasId;
+function getLimpiezasWrongId(requester, id) {
     return __awaiter(this, void 0, void 0, function () {
+        var response, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, loginTest()];
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, requester.get("".concat(base, "/").concat(id))];
                 case 1:
-                    _a.sent();
-                    return [2 /*return*/];
+                    response = _a.sent();
+                    console.log(red, "ERROR - Mal id obtener limpiezas");
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_2 = _a.sent();
+                    console.log(green, "OK - Mal id obtener limpiezas");
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });
 }
-startTests();
+exports.getLimpiezasWrongId = getLimpiezasWrongId;
