@@ -37,9 +37,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var login_1 = require("./auth/login");
-var get_limpieza_id_1 = require("./limpieza/get.limpieza.id");
+var get_limpieza_id_1 = require("./limpieza/get/get.limpieza.id");
+var post_limpieza_1 = require("./limpieza/put/post.limpieza");
+var limpiezaResource = require("./limpieza/resources/test.variables");
 var axios_1 = require("axios");
 var white = "\x1b[0m";
+var token = "";
 var requester = axios_1.default.create({
     baseURL: "http://localhost:3000/",
     headers: {
@@ -53,7 +56,6 @@ var passIncorrecto = { login: "usuario", password: "any" };
 var credsCorrectas = { login: "usuario", password: "usuario" };
 function loginTest() {
     return __awaiter(this, void 0, void 0, function () {
-        var token;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, login_1.testNoAuth)(requester, credsIncorrectas, "Credenciales incorrectas")];
@@ -88,20 +90,59 @@ function getLimpiezasIdTest() {
         });
     });
 }
+function nuevaLimpiezaTest() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: 
+                //Test de sin autorización
+                return [4 /*yield*/, (0, post_limpieza_1.errorNuevaLimpieza)(requester, limpiezaResource.limpiezaValida, "No autorizado")
+                    //Tets con autorización
+                ];
+                case 1:
+                    //Test de sin autorización
+                    _a.sent();
+                    //Tets con autorización
+                    requester.defaults.headers.common["authorization"] = "Bearer ".concat(token);
+                    return [4 /*yield*/, (0, post_limpieza_1.errorNuevaLimpieza)(requester, limpiezaResource.limpiezaHabitacionNoValida, "Nueva limpieza con id erróneo")];
+                case 2:
+                    _a.sent();
+                    return [4 /*yield*/, (0, post_limpieza_1.errorNuevaLimpieza)(requester, limpiezaResource.limpiezaSinFecha, "Nueva limpieza sin fecha")];
+                case 3:
+                    _a.sent();
+                    return [4 /*yield*/, (0, post_limpieza_1.nuevaLimpieza)(requester, limpiezaResource.limpiezaSinObservaciones, "Nueva limpieza sin observaciones")];
+                case 4:
+                    _a.sent();
+                    return [4 /*yield*/, (0, post_limpieza_1.nuevaLimpieza)(requester, limpiezaResource.limpiezaValida, "Nueva limpieza")];
+                case 5:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
 function startTests() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, loginTest()];
+                case 0:
+                    console.log(white, "Start Test Login");
+                    return [4 /*yield*/, loginTest()];
                 case 1:
                     _a.sent();
                     console.log(white, "Fin Test Login");
                     console.log("");
+                    console.log(white, "Start Test Obtener Limpiezas por ID");
                     return [4 /*yield*/, getLimpiezasIdTest()];
                 case 2:
                     _a.sent();
                     console.log(white, "Fin Test Obtener Limpiezas por ID");
                     console.log("");
+                    console.log(white, "Start Test Insertar Limpieza");
+                    return [4 /*yield*/, nuevaLimpiezaTest()];
+                case 3:
+                    _a.sent();
+                    console.log(white, "Fin Test Insertar Limpieza");
                     return [2 /*return*/];
             }
         });
