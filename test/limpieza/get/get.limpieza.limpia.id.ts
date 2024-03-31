@@ -1,15 +1,17 @@
 import { AxiosInstance, AxiosResponse } from "axios"
+import { validarGet } from "../resources/get.limpiezas.validacion"
 
 const red = "\x1b[31m"
 const green = "\x1b[32m"
 const base = "limpieza/limpia"
 
-export function saberLimpieza(requester: AxiosInstance, id: number){
+export async function saberLimpieza(requester: AxiosInstance, id: number){
 
     let response: AxiosResponse
 
     try{
-        response = requester.get(`${base}/${id}`)
+        response = await requester.get(`${base}/${id}`)
+        validarGet(response.data)
     }
     catch(error){
 

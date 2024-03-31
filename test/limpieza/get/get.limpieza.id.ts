@@ -1,4 +1,5 @@
 import { AxiosInstance, AxiosResponse} from "axios"
+import { validarGet } from "../resources/get.limpiezas.validacion"
 
 const red = "\x1b[31m"
 const green = "\x1b[32m"
@@ -10,12 +11,7 @@ export async function getLimpiezasId(requester: AxiosInstance, id: string){
 
     try{
         response = await requester.get(`${base}/${id}`)
-        const limpiezaInvalida = response.data.find(l => !l.habitacion || !l.fecha)
-        
-        if(limpiezaInvalida)
-            throw new Error()
-        else
-            console.log(green, "OK - Obtener limpiezas")
+        validarGet(response.data)
     }
     catch(error){
         console.log(red, "ERROR - Obtener limpiezas")
