@@ -10,7 +10,12 @@ export async function getLimpiezasId(requester: AxiosInstance, id: string){
 
     try{
         response = await requester.get(`${base}/${id}`)
-        console.log(green, "OK - Obtener limpiezas")
+        const limpiezaInvalida = response.data.find(l => !l.habitacion || !l.fecha)
+        
+        if(limpiezaInvalida)
+            throw new Error()
+        else
+            console.log(green, "OK - Obtener limpiezas")
     }
     catch(error){
         console.log(red, "ERROR - Obtener limpiezas")

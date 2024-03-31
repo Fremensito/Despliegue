@@ -42,7 +42,7 @@ var green = "\x1b[32m";
 var base = "limpieza";
 function getLimpiezasId(requester, id) {
     return __awaiter(this, void 0, void 0, function () {
-        var response, error_1;
+        var response, limpiezaInvalida, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -50,7 +50,13 @@ function getLimpiezasId(requester, id) {
                     return [4 /*yield*/, requester.get("".concat(base, "/").concat(id))];
                 case 1:
                     response = _a.sent();
-                    console.log(green, "OK - Obtener limpiezas");
+                    limpiezaInvalida = response.data.find(function (l) {
+                        return !l.habitacion || !l.fecha || (l.observaciones === undefined);
+                    });
+                    if (limpiezaInvalida)
+                        throw new Error();
+                    else
+                        console.log(green, "OK - Obtener limpiezas");
                     return [3 /*break*/, 3];
                 case 2:
                     error_1 = _a.sent();

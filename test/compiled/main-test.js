@@ -97,12 +97,12 @@ function nuevaLimpiezaTest() {
                 case 0: 
                 //Test de sin autorización
                 return [4 /*yield*/, (0, post_limpieza_1.errorNuevaLimpieza)(requester, limpiezaResource.limpiezaValida, "No autorizado")
-                    //Tets con autorización
+                    //Test con autorización
                 ];
                 case 1:
                     //Test de sin autorización
                     _a.sent();
-                    //Tets con autorización
+                    //Test con autorización
                     requester.defaults.headers.common["authorization"] = "Bearer ".concat(token);
                     return [4 /*yield*/, (0, post_limpieza_1.errorNuevaLimpieza)(requester, limpiezaResource.limpiezaHabitacionNoValida, "Nueva limpieza con id erróneo")];
                 case 2:
@@ -143,6 +143,7 @@ function startTests() {
                 case 3:
                     _a.sent();
                     console.log(white, "Fin Test Insertar Limpieza");
+                    console.log("");
                     return [2 /*return*/];
             }
         });

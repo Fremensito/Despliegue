@@ -14,7 +14,6 @@ const requester = axios.create({
     }
 })
 
-
 //Variables test login
 const credsIncorrectas = {login: "any", password: "any"}
 const loginIncorrecto = {login: "any", password: "usuario"}
@@ -40,7 +39,7 @@ async function nuevaLimpiezaTest(){
     //Test de sin autorización
     await errorNuevaLimpieza(requester, limpiezaResource.limpiezaValida, "No autorizado")
 
-    //Tets con autorización
+    //Test con autorización
     requester.defaults.headers.common["authorization"] = `Bearer ${token}`
 
     await errorNuevaLimpieza(requester, limpiezaResource.limpiezaHabitacionNoValida, "Nueva limpieza con id erróneo")
@@ -64,6 +63,7 @@ async function startTests(){
     console.log(white, "Start Test Insertar Limpieza")
     await nuevaLimpiezaTest()
     console.log(white, "Fin Test Insertar Limpieza")
+    console.log("")
 }
 
 startTests()
