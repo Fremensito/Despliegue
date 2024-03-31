@@ -36,55 +36,59 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLimpiezasMalId = exports.getLimpiezasId = void 0;
+exports.errorNuevaLimpieza = exports.nuevaLimpieza = void 0;
 var red = "\x1b[31m";
 var green = "\x1b[32m";
 var base = "limpieza";
-function getLimpiezasId(requester, id) {
+function nuevaLimpieza(requester, limpieza, mensaje) {
     return __awaiter(this, void 0, void 0, function () {
-        var response, limpiezaInvalida, error_1;
+        var response, habitacion, fecha, observaciones, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, requester.get("".concat(base, "/").concat(id))];
+                    habitacion = limpieza.habitacion, fecha = limpieza.fecha, observaciones = limpieza.observaciones;
+                    _a.label = 1;
                 case 1:
-                    response = _a.sent();
-                    limpiezaInvalida = response.data.find(function (l) { return !l.habitacion || !l.fecha; });
-                    if (limpiezaInvalida)
-                        throw new Error();
-                    else
-                        console.log(green, "OK - Obtener limpiezas");
-                    return [3 /*break*/, 3];
+                    _a.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, requester.post("".concat(base), limpieza)];
                 case 2:
+                    response = _a.sent();
+                    if (response.data.habitacion === habitacion
+                        && new Date(response.data.fecha).toString() == fecha.toString()
+                        && response.data.observaciones === observaciones)
+                        console.log(green, "OK - ".concat(mensaje));
+                    else
+                        throw new Error();
+                    return [3 /*break*/, 4];
+                case 3:
                     error_1 = _a.sent();
-                    console.log(red, "ERROR - Obtener limpiezas");
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
+                    console.log(red, "ERROR - ".concat(mensaje));
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });
 }
-exports.getLimpiezasId = getLimpiezasId;
-function getLimpiezasMalId(requester, id) {
+exports.nuevaLimpieza = nuevaLimpieza;
+function errorNuevaLimpieza(requester, limpieza, mensaje) {
     return __awaiter(this, void 0, void 0, function () {
         var response, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, requester.get("".concat(base, "/").concat(id))];
+                    return [4 /*yield*/, requester.post("".concat(base), limpieza)];
                 case 1:
                     response = _a.sent();
-                    console.log(red, "ERROR - Mal id obtener limpiezas");
+                    console.log(red, "ERROR - ".concat(mensaje));
                     return [3 /*break*/, 3];
                 case 2:
                     error_2 = _a.sent();
-                    console.log(green, "OK - Mal id obtener limpiezas");
+                    console.log(green, "OK - ".concat(mensaje));
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
         });
     });
 }
-exports.getLimpiezasMalId = getLimpiezasMalId;
+exports.errorNuevaLimpieza = errorNuevaLimpieza;

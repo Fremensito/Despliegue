@@ -38,7 +38,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var login_1 = require("./auth/login");
 var get_limpieza_id_1 = require("./limpieza/get/get.limpieza.id");
-var post_limpieza_1 = require("./limpieza/put/post.limpieza");
+var get_limpieza_limpia_id_1 = require("./limpieza/get/get.limpieza.limpia.id");
+var get_limpieza_limpias_1 = require("./limpieza/get/get.limpieza.limpias");
+var post_limpieza_1 = require("./limpieza/post/post.limpieza");
 var limpiezaResource = require("./limpieza/resources/test.variables");
 var axios_1 = require("axios");
 var white = "\x1b[0m";
@@ -79,7 +81,7 @@ function getLimpiezasIdTest() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, get_limpieza_id_1.getLimpiezasWrongId)(requester, "test")];
+                case 0: return [4 /*yield*/, (0, get_limpieza_id_1.getLimpiezasMalId)(requester, "test")];
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, (0, get_limpieza_id_1.getLimpiezasId)(requester, "65fc3f811f64471e23a88608")];
@@ -121,6 +123,36 @@ function nuevaLimpiezaTest() {
         });
     });
 }
+function limpiezaHabitacionTest() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, get_limpieza_limpia_id_1.saberLimpiezaMalId)(requester, "malID")];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, (0, get_limpieza_limpia_id_1.saberLimpiezaSucia)(requester, limpiezaResource.habitacionNoHoy)];
+                case 2:
+                    _a.sent();
+                    return [4 /*yield*/, (0, get_limpieza_limpia_id_1.saberLimpiezaLimpia)(requester, limpiezaResource.habitacionHoy)];
+                case 3:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function habitacionesLimpiasTest() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, get_limpieza_limpias_1.getHabitacionesLimpias)(requester)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
 function startTests() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -143,6 +175,18 @@ function startTests() {
                 case 3:
                     _a.sent();
                     console.log(white, "Fin Test Insertar Limpieza");
+                    console.log("");
+                    console.log(white, "Start Test Obtener Limpieza Habitación");
+                    return [4 /*yield*/, limpiezaHabitacionTest()];
+                case 4:
+                    _a.sent();
+                    console.log(white, "Fin Test Obtener Limpieza Habitación");
+                    console.log("");
+                    console.log(white, "Start Test Obtener Habitaciones Limpias");
+                    return [4 /*yield*/, habitacionesLimpiasTest()];
+                case 5:
+                    _a.sent();
+                    console.log(white, "Fin Test Obtener Habitaciones Limpias");
                     console.log("");
                     return [2 /*return*/];
             }

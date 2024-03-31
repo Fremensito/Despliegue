@@ -1,8 +1,10 @@
 import { testNoAuth, testAuth } from "./auth/login";
-import { getLimpiezasId, getLimpiezasWrongId } from "./limpieza/get/get.limpieza.id";
-import { nuevaLimpieza, errorNuevaLimpieza } from "./limpieza/put/post.limpieza";
+import { getLimpiezasId, getLimpiezasMalId } from "./limpieza/get/get.limpieza.id";
+import { saberLimpiezaLimpia, saberLimpiezaMalId, saberLimpiezaSucia } from "./limpieza/get/get.limpieza.limpia.id";
+import { getHabitacionesLimpias } from "./limpieza/get/get.limpieza.limpias";
+import { nuevaLimpieza, errorNuevaLimpieza } from "./limpieza/post/post.limpieza";
 import * as limpiezaResource from "./limpieza/resources/test.variables"
-import axios from "axios"
+import axios, { AxiosInstance } from "axios"
 
 const white = "\x1b[0m"
 let token: string | void = ""
@@ -30,7 +32,7 @@ async function loginTest(){
 
 async function getLimpiezasIdTest(){
 
-    await getLimpiezasWrongId(requester, "test")
+    await getLimpiezasMalId(requester, "test")
     await getLimpiezasId(requester, "65fc3f811f64471e23a88608")
 }
 
@@ -46,6 +48,18 @@ async function nuevaLimpiezaTest(){
     await errorNuevaLimpieza(requester, limpiezaResource.limpiezaSinFecha, "Nueva limpieza sin fecha")
     await nuevaLimpieza(requester, limpiezaResource.limpiezaSinObservaciones, "Nueva limpieza sin observaciones")
     await nuevaLimpieza(requester, limpiezaResource.limpiezaValida, "Nueva limpieza")
+}
+
+async function limpiezaHabitacionTest(){
+
+    await saberLimpiezaMalId(requester, "malID")
+    await saberLimpiezaSucia(requester, limpiezaResource.habitacionNoHoy)
+    await saberLimpiezaLimpia(requester, limpiezaResource.habitacionHoy)
+}
+
+async function habitacionesLimpiasTest(){
+
+    await getHabitacionesLimpias(requester)
 }
 
 async function startTests(){
@@ -64,6 +78,17 @@ async function startTests(){
     await nuevaLimpiezaTest()
     console.log(white, "Fin Test Insertar Limpieza")
     console.log("")
+
+    console.log(white, "Start Test Obtener Limpieza Habitación")
+    await limpiezaHabitacionTest()
+    console.log(white, "Fin Test Obtener Limpieza Habitación")
+    console.log("")
+
+    console.log(white, "Start Test Obtener Habitaciones Limpias")
+    await habitacionesLimpiasTest()
+    console.log(white, "Fin Test Obtener Habitaciones Limpias")
+    console.log("")
 }
 
 startTests()
+

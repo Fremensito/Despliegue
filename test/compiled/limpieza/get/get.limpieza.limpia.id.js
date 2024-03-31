@@ -36,13 +36,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLimpiezasMalId = exports.getLimpiezasId = void 0;
+exports.saberLimpiezaMalId = exports.saberLimpiezaSucia = exports.saberLimpiezaLimpia = void 0;
 var red = "\x1b[31m";
 var green = "\x1b[32m";
-var base = "limpieza";
-function getLimpiezasId(requester, id) {
+var base = "limpieza/limpia";
+function saberLimpiezaLimpia(requester, id) {
     return __awaiter(this, void 0, void 0, function () {
-        var response, limpiezaInvalida, error_1;
+        var response, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -50,23 +50,22 @@ function getLimpiezasId(requester, id) {
                     return [4 /*yield*/, requester.get("".concat(base, "/").concat(id))];
                 case 1:
                     response = _a.sent();
-                    limpiezaInvalida = response.data.find(function (l) { return !l.habitacion || !l.fecha; });
-                    if (limpiezaInvalida)
-                        throw new Error();
+                    if (response.data.ok !== undefined && response.data.ok === true)
+                        console.log(green, "OK - Obtener limpieza habitación limpia");
                     else
-                        console.log(green, "OK - Obtener limpiezas");
+                        throw new Error();
                     return [3 /*break*/, 3];
                 case 2:
                     error_1 = _a.sent();
-                    console.log(red, "ERROR - Obtener limpiezas");
+                    console.log(red, "ERROR - Obtener limpieza habitación");
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
         });
     });
 }
-exports.getLimpiezasId = getLimpiezasId;
-function getLimpiezasMalId(requester, id) {
+exports.saberLimpiezaLimpia = saberLimpiezaLimpia;
+function saberLimpiezaSucia(requester, id) {
     return __awaiter(this, void 0, void 0, function () {
         var response, error_2;
         return __generator(this, function (_a) {
@@ -76,15 +75,40 @@ function getLimpiezasMalId(requester, id) {
                     return [4 /*yield*/, requester.get("".concat(base, "/").concat(id))];
                 case 1:
                     response = _a.sent();
-                    console.log(red, "ERROR - Mal id obtener limpiezas");
+                    if (response.data.ok !== undefined && response.data.ok === false)
+                        console.log(green, "OK - Obtener limpieza habitación sucia");
+                    else
+                        throw new Error();
                     return [3 /*break*/, 3];
                 case 2:
                     error_2 = _a.sent();
-                    console.log(green, "OK - Mal id obtener limpiezas");
+                    console.log(red, "ERROR - Obtener limpieza habitación sucia");
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
         });
     });
 }
-exports.getLimpiezasMalId = getLimpiezasMalId;
+exports.saberLimpiezaSucia = saberLimpiezaSucia;
+function saberLimpiezaMalId(requester, id) {
+    return __awaiter(this, void 0, void 0, function () {
+        var response, error_3;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, requester.get("".concat(base, "/").concat(id))];
+                case 1:
+                    response = _a.sent();
+                    console.log(red, "ERROR - Obtener limpieza habitación mal id");
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_3 = _a.sent();
+                    console.log(green, "OK - Obtener limpieza habitación mal id");
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.saberLimpiezaMalId = saberLimpiezaMalId;
