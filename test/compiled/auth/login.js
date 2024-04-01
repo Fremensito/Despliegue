@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.testAuth = exports.testNoAuth = void 0;
+var tests_counter_1 = require("../tests.counter");
 var red = "\x1b[31m";
 var green = "\x1b[32m";
 var base = "auth";
@@ -58,6 +59,7 @@ function testNoAuth(requester, usuario, mensaje) {
                 case 2:
                     error_1 = _a.sent();
                     console.log(green, "OK - ".concat(mensaje));
+                    tests_counter_1.TestsCounter.testsPasados++;
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
@@ -76,9 +78,11 @@ function testAuth(requester, usuario) {
                 case 1:
                     respuesta = _a.sent();
                     if (respuesta.status == 201) {
-                        console.log(green, "OK - Credenciales correctas");
-                        if (respuesta.data.token)
+                        if (respuesta.data.token) {
+                            console.log(green, "OK - Credenciales correctas");
+                            tests_counter_1.TestsCounter.testsPasados++;
                             return [2 /*return*/, respuesta.data.token];
+                        }
                         else
                             throw new Error();
                     }

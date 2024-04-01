@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getLimpiezasMalId = exports.getLimpiezasId = void 0;
+var tests_counter_1 = require("../../tests.counter");
 var red = "\x1b[31m";
 var green = "\x1b[32m";
 var base = "limpieza";
@@ -53,8 +54,10 @@ function getLimpiezasId(requester, id) {
                     limpiezaInvalida = response.data.find(function (l) { return !l.habitacion || !l.fecha; });
                     if (limpiezaInvalida)
                         throw new Error();
-                    else
+                    else {
                         console.log(green, "OK - Obtener limpiezas");
+                        tests_counter_1.TestsCounter.testsPasados++;
+                    }
                     return [3 /*break*/, 3];
                 case 2:
                     error_1 = _a.sent();
@@ -81,6 +84,7 @@ function getLimpiezasMalId(requester, id) {
                 case 2:
                     error_2 = _a.sent();
                     console.log(green, "OK - Mal id obtener limpiezas");
+                    tests_counter_1.TestsCounter.testsPasados++;
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }

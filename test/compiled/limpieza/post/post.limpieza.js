@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.errorNuevaLimpieza = exports.nuevaLimpieza = void 0;
+var tests_counter_1 = require("../../tests.counter");
 var red = "\x1b[31m";
 var green = "\x1b[32m";
 var base = "limpieza";
@@ -55,8 +56,10 @@ function nuevaLimpieza(requester, limpieza, mensaje) {
                     response = _a.sent();
                     if (response.data.habitacion === habitacion
                         && new Date(response.data.fecha).toString() == fecha.toString()
-                        && response.data.observaciones === observaciones)
+                        && response.data.observaciones === observaciones) {
                         console.log(green, "OK - ".concat(mensaje));
+                        tests_counter_1.TestsCounter.testsPasados++;
+                    }
                     else
                         throw new Error();
                     return [3 /*break*/, 4];
@@ -85,6 +88,7 @@ function errorNuevaLimpieza(requester, limpieza, mensaje) {
                 case 2:
                     error_2 = _a.sent();
                     console.log(green, "OK - ".concat(mensaje));
+                    tests_counter_1.TestsCounter.testsPasados++;
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }

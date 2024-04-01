@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getHabitacionesLimpias = void 0;
+var tests_counter_1 = require("../../tests.counter");
 var red = "\x1b[31m";
 var green = "\x1b[32m";
 var base = "limpieza/limpias";
@@ -50,8 +51,10 @@ function getHabitacionesLimpias(requester) {
                     return [4 /*yield*/, requester.get("".concat(base))];
                 case 1:
                     response = _a.sent();
-                    if (response.data.length != 0)
+                    if (response.data.length != 0) {
                         console.log(green, "OK - Obtener habitaciones limpias");
+                        tests_counter_1.TestsCounter.testsPasados++;
+                    }
                     else
                         throw new Error();
                     return [3 /*break*/, 3];

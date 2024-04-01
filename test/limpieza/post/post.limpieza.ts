@@ -1,4 +1,5 @@
 import { AxiosInstance, AxiosResponse} from "axios"
+import { TestsCounter } from "../../tests.counter"
 
 const red = "\x1b[31m"
 const green = "\x1b[32m"
@@ -14,8 +15,10 @@ export async function nuevaLimpieza(requester: AxiosInstance, limpieza, mensaje)
             response.data.habitacion === habitacion 
             && new Date(response.data.fecha).toString() == fecha.toString()
             && response.data.observaciones === observaciones
-        )
+        ){
             console.log(green, `OK - ${mensaje}`)
+            TestsCounter.testsPasados++
+        }
         else
             throw new Error()
     }
@@ -34,5 +37,6 @@ export async function errorNuevaLimpieza(requester: AxiosInstance, limpieza, men
     }
     catch(error){
         console.log(green, `OK - ${mensaje}`)
+        TestsCounter.testsPasados++
     }
 }

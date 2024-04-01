@@ -6,6 +6,7 @@ export interface Limpieza {
 
 export const habitacionHoy = "test"
 export const habitacionNoHoy = "test no hoy"
+export const idLimpieza = "test"
 export const fecha = new Date(Date())
 
 export const limpiezaValida: Limpieza = {
@@ -18,6 +19,23 @@ export const limpiezaSinHabitacion: Limpieza = {
     habitacion: "",
     fecha: fecha,
     observaciones: "any"
+}
+
+export const limpiezaFechaErronea = {
+    fecha: "error"
+}
+
+export const limpiezaFechaModificada = {
+    fecha: "2024-03-01"
+}
+
+export const limpiezaObservacionesModificada = {
+    observaciones: "nueva observación"
+}
+
+export const limpiezaModificada = {
+    fecha: "2024-03-03",
+    observaciones: "observación modificada"
 }
 
 export const limpiezaHabitacionNoValida: Limpieza = {

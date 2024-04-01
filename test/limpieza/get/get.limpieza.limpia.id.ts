@@ -1,4 +1,5 @@
 import { AxiosInstance, AxiosResponse } from "axios"
+import { TestsCounter } from "../../tests.counter"
 
 const red = "\x1b[31m"
 const green = "\x1b[32m"
@@ -10,9 +11,11 @@ export async function saberLimpiezaLimpia(requester: AxiosInstance, id: string){
 
     try{
         response = await requester.get(`${base}/${id}`)
-        if(response.data.ok !== undefined && response.data.ok === true)
+        if(response.data.ok !== undefined && response.data.ok === true){
             console.log(green, "OK - Obtener limpieza habitación limpia")
-        else 
+            TestsCounter.testsPasados++
+        }
+        else
             throw new Error()
     }
     catch(error){
@@ -26,8 +29,10 @@ export async function saberLimpiezaSucia(requester: AxiosInstance, id: string){
 
     try{
         response = await requester.get(`${base}/${id}`)
-        if(response.data.ok !== undefined && response.data.ok === false)
+        if(response.data.ok !== undefined && response.data.ok === false){
             console.log(green, "OK - Obtener limpieza habitación sucia")
+            TestsCounter.testsPasados++
+        }
         else 
             throw new Error()
     }
@@ -46,5 +51,6 @@ export async function saberLimpiezaMalId(requester: AxiosInstance, id: string){
     }
     catch(error){
         console.log(green, "OK - Obtener limpieza habitación mal id")
+        TestsCounter.testsPasados++
     }
 }

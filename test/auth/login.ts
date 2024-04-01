@@ -1,4 +1,5 @@
 import { AxiosInstance, AxiosResponse} from "axios"
+import { TestsCounter } from "../tests.counter"
 
 const red = "\x1b[31m"
 const green = "\x1b[32m"
@@ -20,6 +21,7 @@ export async function testNoAuth(
     }
     catch(error){
         console.log(green, `OK - ${mensaje}`)
+        TestsCounter.testsPasados++
     }
 }
 
@@ -33,9 +35,11 @@ export async function testAuth(
     try{
         respuesta = await requester.post(`${base}/login`, usuario)
         if (respuesta.status == 201){
-            console.log(green,  "OK - Credenciales correctas")
-            if(respuesta.data.token)
+            if(respuesta.data.token){
+                console.log(green,  "OK - Credenciales correctas")
+                TestsCounter.testsPasados++
                 return respuesta.data.token
+            }
             else
                 throw new Error()
         }

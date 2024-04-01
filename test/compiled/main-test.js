@@ -41,8 +41,10 @@ var get_limpieza_id_1 = require("./limpieza/get/get.limpieza.id");
 var get_limpieza_limpia_id_1 = require("./limpieza/get/get.limpieza.limpia.id");
 var get_limpieza_limpias_1 = require("./limpieza/get/get.limpieza.limpias");
 var post_limpieza_1 = require("./limpieza/post/post.limpieza");
+var patch_limpieza_id_1 = require("./limpieza/patch/patch.limpieza.id");
 var limpiezaResource = require("./limpieza/resources/test.variables");
 var axios_1 = require("axios");
+var tests_counter_1 = require("./tests.counter");
 var white = "\x1b[0m";
 var token = "";
 var requester = axios_1.default.create({
@@ -118,6 +120,7 @@ function nuevaLimpiezaTest() {
                     return [4 /*yield*/, (0, post_limpieza_1.nuevaLimpieza)(requester, limpiezaResource.limpiezaValida, "Nueva limpieza")];
                 case 5:
                     _a.sent();
+                    delete requester.defaults.headers.common["authorization"];
                     return [2 /*return*/];
             }
         });
@@ -147,6 +150,38 @@ function habitacionesLimpiasTest() {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, get_limpieza_limpias_1.getHabitacionesLimpias)(requester)];
                 case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function actualizarLimpiezaTest() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: 
+                //Test sin autorización
+                return [4 /*yield*/, (0, patch_limpieza_id_1.actualizarLimpiezaMal)(requester, limpiezaResource.limpiezaModificada, limpiezaResource.idLimpieza, "No autorizado")];
+                case 1:
+                    //Test sin autorización
+                    _a.sent(),
+                        //Test con autorización
+                        requester.defaults.headers.common["authorization"] = "Bearer ".concat(token);
+                    return [4 /*yield*/, (0, patch_limpieza_id_1.actualizarLimpiezaMal)(requester, limpiezaResource.limpiezaModificada, "error", "Id erróneo")];
+                case 2:
+                    _a.sent();
+                    return [4 /*yield*/, (0, patch_limpieza_id_1.actualizarLimpiezaMal)(requester, limpiezaResource.limpiezaModificada, "65fc3f811f64471e23a88608", "Limpieza not found")];
+                case 3:
+                    _a.sent();
+                    return [4 /*yield*/, (0, patch_limpieza_id_1.actualizarLimpiezaMal)(requester, limpiezaResource.limpiezaFechaErronea, limpiezaResource.idLimpieza, "Fecha errónea")];
+                case 4:
+                    _a.sent();
+                    return [4 /*yield*/, (0, patch_limpieza_id_1.actualizarLimpieza)(requester, limpiezaResource.limpiezaFechaModificada, limpiezaResource.idLimpieza, "Modificación fecha")];
+                case 5:
+                    _a.sent();
+                    return [4 /*yield*/, (0, patch_limpieza_id_1.actualizarLimpieza)(requester, limpiezaResource.limpiezaObservacionesModificada, limpiezaResource.idLimpieza, "Modificación observaciones")];
+                case 6:
                     _a.sent();
                     return [2 /*return*/];
             }
@@ -188,6 +223,13 @@ function startTests() {
                     _a.sent();
                     console.log(white, "Fin Test Obtener Habitaciones Limpias");
                     console.log("");
+                    console.log(white, "Start Test Modificar Limpieza");
+                    return [4 /*yield*/, actualizarLimpiezaTest()];
+                case 6:
+                    _a.sent();
+                    console.log(white, "Fin Test Actualizar Limpieza");
+                    console.log("");
+                    console.log(white, "TESTS APROBADOS: ".concat(tests_counter_1.TestsCounter.testsPasados, "/").concat(tests_counter_1.TestsCounter.tests));
                     return [2 /*return*/];
             }
         });
