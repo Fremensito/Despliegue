@@ -16,7 +16,7 @@ export class Limpieza extends Document{
     fecha: Date;
 
     @Prop({
-        required:true,
+        required:false,
         trim:true
     })
     observaciones:string;
