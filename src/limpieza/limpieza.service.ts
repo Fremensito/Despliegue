@@ -1,16 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable,BadRequestException,NotFoundException} from '@nestjs/common';
 import { CreateLimpiezaDto } from './dto/create-limpieza.dto';
 import { UpdateLimpiezaDto } from './dto/update-limpieza.dto';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { Limpieza } from './entities/limpieza.entity';
+import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
 
 @Injectable()
 export class LimpiezaService {
-  create(createLimpiezaDto: CreateLimpiezaDto) {
-    return 'This action adds a new limpieza';
+
+  constructor(
+  @InjectModel('limpiezas')
+  private readonly limpiezaModel: Model<Limpieza>,
+  @InjectModel('habitaciones')
+  private readonly habitacionModel: Model<Habitacion>
+  ){}
+
+  async create(createLimpiezaDto: CreateLimpiezaDto) {
+    try{
+      const nuevaLimpieza = await this.limpiezaModel.create(createLimpiezaDto);
+      await this.habitacionModel.updateOne(
+        {_id: createLimpiezaDto.habitacion},
+        {ultimaLimpieza:nuevaLimpieza.fecha})
+      return nuevaLimpieza;
+    }
+    catch (error){
+      throw new BadRequestException(error.mesºsage);
+    }
   }
 
-  findAll() {
-    return `This action returns all limpieza`;
+  async findAll(idHabitacion: string) {
+    const limpiezas = await this.limpiezaModel
+    .find({ habitacion: idHabitacion })
+    .sort({ fecha: -1 });
+    return limpiezas;
   }
+
+
 
   findOne(id: number) {
     return `This action returns a #${id} limpieza`;
@@ -20,7 +46,5 @@ export class LimpiezaService {
     return `This action updates a #${id} limpieza`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} limpieza`;
-  }
+
 }
