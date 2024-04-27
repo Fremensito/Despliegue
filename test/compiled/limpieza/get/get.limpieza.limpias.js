@@ -38,9 +38,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getHabitacionesLimpias = void 0;
 var tests_counter_1 = require("../../tests.counter");
+var test_variables_1 = require("../resources/test.variables");
 var red = "\x1b[31m";
 var green = "\x1b[32m";
 var base = "limpieza/limpias";
+function checkHoy(limpiezas) {
+    var fechaHoy = "".concat(test_variables_1.fecha.getFullYear(), "-").concat(test_variables_1.fecha.getMonth(), "-").concat(test_variables_1.fecha.getDay());
+    limpiezas.forEach(function (l) {
+        var fechaLimpieza = "".concat(l.fecha.getFullYear(), "-").concat(l.fecha.getMonth, "-").concat(l.fecha.getDay);
+        if (fechaLimpieza != fechaHoy)
+            throw new Error();
+    });
+}
 function getHabitacionesLimpias(requester) {
     return __awaiter(this, void 0, void 0, function () {
         var response, error_1;
@@ -52,6 +61,7 @@ function getHabitacionesLimpias(requester) {
                 case 1:
                     response = _a.sent();
                     if (response.data.length != 0) {
+                        checkHoy(response.data);
                         console.log(green, "OK - Obtener habitaciones limpias");
                         tests_counter_1.TestsCounter.testsPasados++;
                     }
