@@ -8,7 +8,7 @@ export class LimpiezaController {
   constructor(private readonly limpiezaService: LimpiezaService) {}
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findAll(@Param('id') id: string) {
     return this.limpiezaService.findAll(id);
   }
 
