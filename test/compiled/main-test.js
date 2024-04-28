@@ -47,6 +47,7 @@ var axios_1 = require("axios");
 var tests_counter_1 = require("./tests.counter");
 var white = "\x1b[0m";
 var token = "";
+var limpieza;
 var requester = axios_1.default.create({
     baseURL: "http://localhost:3000/",
     headers: {
@@ -86,7 +87,7 @@ function getLimpiezasIdTest() {
                 case 0: return [4 /*yield*/, (0, get_limpieza_id_1.getLimpiezasMalId)(requester, "test")];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, (0, get_limpieza_id_1.getLimpiezasId)(requester, "65fc3f811f64471e23a88608")];
+                    return [4 /*yield*/, (0, get_limpieza_id_1.getLimpiezasId)(requester, limpiezaResource.habitacionNoHoy)];
                 case 2:
                     _a.sent();
                     return [2 /*return*/];
@@ -119,7 +120,7 @@ function nuevaLimpiezaTest() {
                     _a.sent();
                     return [4 /*yield*/, (0, post_limpieza_1.nuevaLimpieza)(requester, limpiezaResource.limpiezaValida, "Nueva limpieza")];
                 case 5:
-                    _a.sent();
+                    limpieza = _a.sent();
                     delete requester.defaults.headers.common["authorization"];
                     return [2 /*return*/];
             }
@@ -174,13 +175,13 @@ function actualizarLimpiezaTest() {
                     return [4 /*yield*/, (0, patch_limpieza_id_1.actualizarLimpiezaMal)(requester, limpiezaResource.limpiezaModificada, "65fc3f811f64471e23a88608", "Limpieza not found")];
                 case 3:
                     _a.sent();
-                    return [4 /*yield*/, (0, patch_limpieza_id_1.actualizarLimpiezaMal)(requester, limpiezaResource.limpiezaFechaErronea, limpiezaResource.idLimpieza, "Fecha errónea")];
+                    return [4 /*yield*/, (0, patch_limpieza_id_1.actualizarLimpiezaMal)(requester, limpiezaResource.limpiezaFechaErronea, limpieza._id, "Fecha errónea")];
                 case 4:
                     _a.sent();
-                    return [4 /*yield*/, (0, patch_limpieza_id_1.actualizarLimpieza)(requester, limpiezaResource.limpiezaFechaModificada, limpiezaResource.idLimpieza, "Modificación fecha")];
+                    return [4 /*yield*/, (0, patch_limpieza_id_1.actualizarLimpieza)(requester, limpiezaResource.limpiezaFechaModificada, limpieza._id, "Modificación fecha")];
                 case 5:
                     _a.sent();
-                    return [4 /*yield*/, (0, patch_limpieza_id_1.actualizarLimpieza)(requester, limpiezaResource.limpiezaObservacionesModificada, limpiezaResource.idLimpieza, "Modificación observaciones")];
+                    return [4 /*yield*/, (0, patch_limpieza_id_1.actualizarLimpieza)(requester, limpiezaResource.limpiezaObservacionesModificada, limpieza._id, "Modificación observaciones")];
                 case 6:
                     _a.sent();
                     return [2 /*return*/];

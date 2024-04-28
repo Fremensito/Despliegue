@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.limpiezaSinObservaciones = exports.limpiezaSinFecha = exports.limpiezaHabitacionNoValida = exports.limpiezaModificada = exports.limpiezaObservacionesModificada = exports.limpiezaFechaModificada = exports.limpiezaFechaErronea = exports.limpiezaSinHabitacion = exports.limpiezaValida = exports.fecha = exports.idLimpieza = exports.habitacionNoHoy = exports.habitacionHoy = void 0;
-exports.habitacionHoy = "test";
-exports.habitacionNoHoy = "test no hoy";
+exports.habitacionHoy = "1a1a1a1a1a1a1a1a1a1a1a1a";
+exports.habitacionNoHoy = "2b2b2b2b2b2b2b2b2b2b2b2b";
 exports.idLimpieza = "test";
 exports.fecha = new Date(Date());
 exports.limpiezaValida = {
-    habitacion: "test",
+    habitacion: exports.habitacionHoy,
     fecha: exports.fecha,
     observaciones: "any"
 };
@@ -34,7 +34,7 @@ exports.limpiezaHabitacionNoValida = {
     observaciones: "any"
 };
 exports.limpiezaSinFecha = {
-    habitacion: "",
+    habitacion: exports.habitacionHoy,
     observaciones: "any"
 };
 exports.limpiezaSinObservaciones = {

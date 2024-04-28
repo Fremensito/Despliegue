@@ -59,6 +59,7 @@ function nuevaLimpieza(requester, limpieza, mensaje) {
                         && response.data.observaciones === observaciones) {
                         console.log(green, "OK - ".concat(mensaje));
                         tests_counter_1.TestsCounter.testsPasados++;
+                        return [2 /*return*/, response.data];
                     }
                     else
                         throw new Error();

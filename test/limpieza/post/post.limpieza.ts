@@ -18,6 +18,7 @@ export async function nuevaLimpieza(requester: AxiosInstance, limpieza, mensaje)
         ){
             console.log(green, `OK - ${mensaje}`)
             TestsCounter.testsPasados++
+            return response.data
         }
         else
             throw new Error()

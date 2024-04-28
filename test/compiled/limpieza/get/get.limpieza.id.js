@@ -52,7 +52,7 @@ function getLimpiezasId(requester, id) {
                 case 1:
                     response = _a.sent();
                     limpiezaInvalida = response.data.find(function (l) { return !l.habitacion || !l.fecha; });
-                    if (limpiezaInvalida)
+                    if (limpiezaInvalida || response.data.length == 0)
                         throw new Error();
                     else {
                         console.log(green, "OK - Obtener limpiezas");

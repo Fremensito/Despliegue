@@ -10,6 +10,7 @@ import { TestsCounter } from "./tests.counter";
 
 const white = "\x1b[0m"
 let token: string | void = ""
+let limpieza
 
 const requester: AxiosInstance = axios.create({
     baseURL: "http://localhost:3000/",
@@ -33,9 +34,8 @@ async function loginTest(){
 }
 
 async function getLimpiezasIdTest(){
-
     await getLimpiezasMalId(requester, "test")
-    await getLimpiezasId(requester, "65fc3f811f64471e23a88608")
+    await getLimpiezasId(requester, limpiezaResource.habitacionNoHoy)
 }
 
 async function nuevaLimpiezaTest(){
@@ -49,7 +49,7 @@ async function nuevaLimpiezaTest(){
     await errorNuevaLimpieza(requester, limpiezaResource.limpiezaHabitacionNoValida, "Nueva limpieza con id erróneo") 
     await errorNuevaLimpieza(requester, limpiezaResource.limpiezaSinFecha, "Nueva limpieza sin fecha")
     await nuevaLimpieza(requester, limpiezaResource.limpiezaSinObservaciones, "Nueva limpieza sin observaciones") 
-    await nuevaLimpieza(requester, limpiezaResource.limpiezaValida, "Nueva limpieza") 
+    limpieza = await nuevaLimpieza(requester, limpiezaResource.limpiezaValida, "Nueva limpieza") 
 
     delete requester.defaults.headers.common["authorization"]
 }
@@ -72,7 +72,8 @@ async function actualizarLimpiezaTest(){
     await actualizarLimpiezaMal(
         requester, 
         limpiezaResource.limpiezaModificada, 
-        limpiezaResource.idLimpieza, "No autorizado"
+        limpiezaResource.idLimpieza, 
+        "No autorizado"
         ), 
 
     //Test con autorización
@@ -93,19 +94,19 @@ async function actualizarLimpiezaTest(){
     await actualizarLimpiezaMal(
         requester, 
         limpiezaResource.limpiezaFechaErronea, 
-        limpiezaResource.idLimpieza, 
+        limpieza._id, 
         "Fecha errónea"
     )
     await actualizarLimpieza(
         requester, 
         limpiezaResource.limpiezaFechaModificada, 
-        limpiezaResource.idLimpieza, 
+        limpieza._id, 
         "Modificación fecha"
     )
     await actualizarLimpieza(
         requester,
         limpiezaResource.limpiezaObservacionesModificada,
-        limpiezaResource.idLimpieza,
+        limpieza._id,
         "Modificación observaciones"
     )
 }

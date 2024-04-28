@@ -4,13 +4,13 @@ export interface Limpieza {
     observaciones: string
 }
 
-export const habitacionHoy = "test"
-export const habitacionNoHoy = "test no hoy"
+export const habitacionHoy = "1a1a1a1a1a1a1a1a1a1a1a1a"
+export const habitacionNoHoy = "2b2b2b2b2b2b2b2b2b2b2b2b"
 export const idLimpieza = "test"
 export const fecha = new Date(Date())
 
 export const limpiezaValida: Limpieza = {
-    habitacion: "test", 
+    habitacion: habitacionHoy, 
     fecha: fecha,
     observaciones: "any"
 }
@@ -45,7 +45,7 @@ export const limpiezaHabitacionNoValida: Limpieza = {
 }
 
 export const limpiezaSinFecha = {
-    habitacion: "",
+    habitacion: habitacionHoy,
     observaciones: "any"
 }
 
