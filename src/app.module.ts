@@ -7,7 +7,7 @@ import { HabitacionModule } from './habitacion/habitacion.module';
 
 @Module({
   imports: [LimpiezaModule,
-  MongooseModule.forRoot('mongodb://127.0.0.1/limpiezas'),
+  MongooseModule.forRoot('mongodb://127.0.0.1/hotel'),
   HabitacionModule],
   controllers: [AppController],
   providers: [AppService],
