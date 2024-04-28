@@ -1,11 +1,11 @@
-import { IsDateString, IsMongoId } from 'class-validator';
+import { IsDateString, IsMongoId,  } from "class-validator";
 
 export class CreateLimpiezaDto {
-  @IsMongoId()
-  readonly habitacion: string;
-
-  @IsDateString()
-  readonly fecha: Date;
-
-  readonly observaciones?: string;
-}
+    @IsMongoId({ message: 'ID incorrecto' })
+    readonly habitacion: string;
+  
+    @IsDateString()
+    readonly fecha: Date;
+  
+    readonly observaciones?: string;
+  }

@@ -1,7 +1,7 @@
 import { Injectable,BadRequestException,NotFoundException} from '@nestjs/common';
 import { CreateLimpiezaDto } from './dto/create-limpieza.dto';
 import { UpdateLimpiezaDto } from './dto/update-limpieza.dto';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Limpieza } from './entities/limpieza.entity';
 import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
@@ -18,6 +18,10 @@ export class LimpiezaService {
 
   // Método para verificar si una habitación ha sido limpiada hoy
   async limpiezaHoy(id: string) {
+     // Verifica si el ID es un ObjectId válido de MongoDB
+  if (!Types.ObjectId.isValid(id)) {
+    throw new BadRequestException('ID incorrecto');
+  }
     const habitacion = await this.habitacionModel.findById(id);
     if (!habitacion) {
       throw new NotFoundException(`Habitación con ID ${id} no encontrada`);
@@ -40,19 +44,23 @@ async habitacionesLimpiasHoy() {
     // Busca todas las habitaciones cuya fecha de última limpieza sea mayor o igual a la fecha de hoy
     // Esto devolverá todas las habitaciones que han sido limpiadas hoy
     const habitaciones = await this.habitacionModel.find({ ultimaLimpieza: { $gte: hoy } });
-    // Devuelve las habitaciones
+    // Devuelve las habitaciones encontradas 
     return habitaciones;
 }
 
 // Método para obtener todas las limpiezas de una habitación específica
 async findAll(idHabitacion: string) {
+  // Verifica si el ID es un ObjectId válido de MongoDB
+  if (!Types.ObjectId.isValid(idHabitacion)) {
+    throw new BadRequestException('ID incorrecto');
+  }
   // Busca todas las limpiezas de la habitación especificada en la base de datos
   // y las ordena en orden descendente por fecha
   const limpiezas = await this.limpiezaModel
   .find({ habitacion: idHabitacion })
   .sort({ fecha: -1 });
-  // Devuelve las limpiezas encontradas o un array vacío si no se encontró ninguna
-  return limpiezas || [];
+  // Devuelve las limpiezas encontradas 
+  return limpiezas;
 }
 
   
