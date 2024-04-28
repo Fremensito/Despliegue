@@ -8,6 +8,13 @@ import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
 
 @Injectable()
 export class LimpiezaService {
+  habitacionesLimpiasHoy() {
+    throw new Error('Method not implemented.');
+  }
+
+  limpiezaHoy(id: string) {
+    throw new Error('Method not implemented.');
+  }
 
   constructor(
   @InjectModel('limpiezas')
@@ -33,7 +40,7 @@ export class LimpiezaService {
     const limpiezas = await this.limpiezaModel
     .find({ habitacion: idHabitacion })
     .sort({ fecha: -1 });
-    return limpiezas;
+    return limpiezas || [];
   }
 
 
