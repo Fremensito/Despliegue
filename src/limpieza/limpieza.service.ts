@@ -49,8 +49,30 @@ export class LimpiezaService {
     return `This action returns a #${id} limpieza`;
   }
 
-  update(id: number, updateLimpiezaDto: UpdateLimpiezaDto) {
-    return `This action updates a #${id} limpieza`;
+async update(id: string, updateLimpiezaDto: UpdateLimpiezaDto) {
+    let limpieza;
+    try {
+      limpieza = await this.limpiezaModel.findById(id);
+      if (!limpieza) {
+        throw { code: 404, message: `Limpieza con ID ${id} no encontrada` };
+      }
+      if (updateLimpiezaDto.fecha) {
+        limpieza.fecha = updateLimpiezaDto.fecha;
+      }
+      if (updateLimpiezaDto.observaciones === null || updateLimpiezaDto.observaciones === "") {
+        await this.limpiezaModel.updateOne({ _id: id }, { $unset: { observaciones: "" } });
+      } else if (updateLimpiezaDto.observaciones) {
+        limpieza.observaciones = updateLimpiezaDto.observaciones;
+      }
+      await limpieza.save();
+    } catch (error) {
+      if (error.code === 404) {
+        throw new NotFoundException(error.message);
+      } else {
+        throw new BadRequestException(error.message);
+      }
+    }
+    return limpieza;
   }
 
 
