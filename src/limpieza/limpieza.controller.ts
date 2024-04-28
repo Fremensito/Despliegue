@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, ValidationPipe,UsePipes } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, ValidationPipe,UsePipes } from '@nestjs/common';
 import { LimpiezaService } from './limpieza.service';
 import { CreateLimpiezaDto } from './dto/create-limpieza.dto';
 import { UpdateLimpiezaDto } from './dto/update-limpieza.dto';
@@ -18,10 +18,10 @@ export class LimpiezaController {
     return this.limpiezaService.create(createLimpiezaDto);
   }
 
-
-  @Patch(':id')
+  @Put(':id')
+  @UsePipes(ValidationPipe)
   update(@Param('id') id: string, @Body() updateLimpiezaDto: UpdateLimpiezaDto) {
-    return this.limpiezaService.update(+id, updateLimpiezaDto);
+    return this.limpiezaService.update(id, updateLimpiezaDto);
   }
 
   @Get('limpia/:id')
