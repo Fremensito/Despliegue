@@ -48,7 +48,7 @@ function actualizarLimpiezaMal(requester, limpieza, id, mensaje) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, requester.patch("".concat(base, "/").concat(id), limpieza)];
+                    return [4 /*yield*/, requester.put("".concat(base, "/").concat(id), limpieza)];
                 case 1:
                     response = _a.sent();
                     console.log(red, "ERROR - ".concat(mensaje));
@@ -71,7 +71,7 @@ function actualizarLimpieza(requester, limpieza, id, mensaje) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, requester.patch("".concat(base, "/").concat(id), limpieza)];
+                    return [4 /*yield*/, requester.put("".concat(base, "/").concat(id), limpieza)];
                 case 1:
                     response = _a.sent();
                     console.log(green, "OK - ".concat(mensaje));

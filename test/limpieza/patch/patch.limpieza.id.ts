@@ -10,7 +10,7 @@ export async function actualizarLimpiezaMal(requester: AxiosInstance, limpieza, 
     let response: AxiosResponse
 
     try{
-        response = await requester.patch(`${base}/${id}`, limpieza)
+        response = await requester.put(`${base}/${id}`, limpieza)
         console.log(red, `ERROR - ${mensaje}`)
     }
     catch(error){
@@ -24,7 +24,7 @@ export async function actualizarLimpieza(requester: AxiosInstance, limpieza, id:
     let response: AxiosResponse
 
     try{
-        response = await requester.patch(`${base}/${id}`, limpieza)
+        response = await requester.put(`${base}/${id}`, limpieza)
         console.log(green, `OK - ${mensaje}`)
         TestsCounter.testsPasados++
     }
